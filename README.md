@@ -1,8 +1,34 @@
-# Backend Coding Test
+# Curiosity - The tale of a warehouse robot
 
 Imagine that this is a project for NASA. They have high standards and strict safety requirements. This test should take between 1 to 2 hours to complete. If it takes longer, don't worry. We're only testing your skills, not your delivery speed.
 
-## Background
+# Usage
+
+Run the project with Docker:
+
+```
+docker-compose build
+docker-compose run --rm web rake db:reset
+docker-compose run --rm web rspec
+```
+
+Or, locally by creating an `.env` file with:
+
+```
+DB_HOST=...
+DB_USER=...
+DB_PASSWORD=...
+```
+
+And then running:
+
+```
+bundle install
+RAILS_ENV=test rake db:create
+rspec
+```
+
+# Background
 
 We have installed a robot in our Mars warehouse and now we need to be able to send it commands to control it. We need you to implement the control mechanism and expose it via an RESTful API.
 
