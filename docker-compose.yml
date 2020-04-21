@@ -5,7 +5,7 @@ services:
     volumes:
       - ./tmp/db:/var/lib/postgresql/data
     environment:
-      POSTGRES_PASSWORD: secret
+      POSTGRES_PASSWORD: 'secret'
 
   web:
     build: .
@@ -15,6 +15,7 @@ services:
     ports:
       - "3000:3000"
     environment:
-      DB_PASSWORD: secret
+      DB_PASSWORD: 'secret'
+      RUBYOPT: '-W:no-deprecated -W:no-experimental' # hide warnings until gems catch up to Ruby 2.7
     depends_on:
       - db
