@@ -7,7 +7,9 @@ FactoryBot.define do
     warehouse
 
     trait :holding_crate do
-      crate
+      after(:create) do |robot|
+        create :crate, x: robot.x, y: robot.y, warehouse: robot.warehouse, robot: robot
+      end
     end
   end
 end
