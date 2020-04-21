@@ -31,3 +31,14 @@ Layout/LineLength:
 
 Style/Documentation:
   Enabled: false
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+  ExcludedMethods:
+    - namespace
+    - draw
+    - context
+    - describe
+    - shared_examples
+    - shared_examples_for
