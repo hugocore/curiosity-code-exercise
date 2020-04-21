@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/hugocore/curiosity-code-exercise.svg?branch=master)](https://travis-ci.org/hugocore/curiosity-code-exercise)
+[![Coverage Status](https://coveralls.io/repos/github/hugocore/curiosity-code-exercise/badge.svg?branch=master)](https://coveralls.io/github/hugocore/curiosity-code-exercise?branch=master)
+
 # Curiosity - The tale of a warehouse robot
 
 Imagine that this is a project for NASA. They have high standards and strict safety requirements. This test should take between 1 to 2 hours to complete. If it takes longer, don't worry. We're only testing your skills, not your delivery speed.
@@ -27,6 +30,39 @@ bundle install
 RAILS_ENV=test rake db:create
 rspec
 ```
+
+# Code Quality
+
+- Run rspec via Spring to speed up preloading with:
+
+```
+docker-compose run --rm web bash
+bundle exec spring rspec
+```
+
+- Check test coverage locally:
+
+```
+open coverage/index.html
+```
+
+- A git commit hook runs Rubocop to validate changes, to skip it run:
+
+```
+SKIP=RuboCop git commit
+```
+
+- Travis makes sure the repo keeps building:
+
+https://travis-ci.org/github/hugocore/curiosity-code-exercise
+
+- Coveralls shows test coverage at:
+
+https://coveralls.io/github/hugocore/curiosity-code-exercise
+
+- Codeclimate checks code quality for every build at:
+
+https://codeclimate.com/github/hugocore/curiosity-code-exercise
 
 # Background
 
