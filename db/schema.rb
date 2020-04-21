@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 # This file is auto-generated from the current state of the database. Instead
 # of editing this file, please use the migrations feature of Active Record to
 # incrementally modify your database, and then regenerate this schema definition.
@@ -12,41 +10,42 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_200_420_183_526) do
+ActiveRecord::Schema.define(version: 2020_04_20_183526) do
+
   # These are extensions that must be enabled in order to support this database
-  enable_extension 'plpgsql'
+  enable_extension "plpgsql"
 
-  create_table 'crates', force: :cascade do |t|
-    t.integer 'x'
-    t.integer 'y'
-    t.bigint 'robot_id', null: false
-    t.bigint 'warehouse_id', null: false
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
-    t.index ['robot_id'], name: 'index_crates_on_robot_id'
-    t.index ['warehouse_id'], name: 'index_crates_on_warehouse_id'
-    t.index %w[x y robot_id], name: 'index_crates_on_x_and_y_and_robot_id', unique: true
-    t.index %w[x y warehouse_id], name: 'index_crates_on_x_and_y_and_warehouse_id', unique: true
+  create_table "crates", force: :cascade do |t|
+    t.integer "x"
+    t.integer "y"
+    t.bigint "robot_id"
+    t.bigint "warehouse_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["robot_id"], name: "index_crates_on_robot_id"
+    t.index ["warehouse_id"], name: "index_crates_on_warehouse_id"
+    t.index ["x", "y", "warehouse_id", "robot_id"], name: "index_crates_on_x_and_y_and_warehouse_id_and_robot_id", unique: true
+    t.index ["x", "y", "warehouse_id"], name: "index_crates_on_x_and_y_and_warehouse_id", unique: true
   end
 
-  create_table 'robots', force: :cascade do |t|
-    t.integer 'x'
-    t.integer 'y'
-    t.bigint 'warehouse_id', null: false
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
-    t.index ['warehouse_id'], name: 'index_robots_on_warehouse_id'
-    t.index %w[x y warehouse_id], name: 'index_robots_on_x_and_y_and_warehouse_id', unique: true
+  create_table "robots", force: :cascade do |t|
+    t.integer "x"
+    t.integer "y"
+    t.bigint "warehouse_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["warehouse_id"], name: "index_robots_on_warehouse_id"
+    t.index ["x", "y", "warehouse_id"], name: "index_robots_on_x_and_y_and_warehouse_id", unique: true
   end
 
-  create_table 'warehouses', force: :cascade do |t|
-    t.integer 'width'
-    t.integer 'length'
-    t.datetime 'created_at', precision: 6, null: false
-    t.datetime 'updated_at', precision: 6, null: false
+  create_table "warehouses", force: :cascade do |t|
+    t.integer "width"
+    t.integer "length"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
-  add_foreign_key 'crates', 'robots'
-  add_foreign_key 'crates', 'warehouses'
-  add_foreign_key 'robots', 'warehouses'
+  add_foreign_key "crates", "robots"
+  add_foreign_key "crates", "warehouses"
+  add_foreign_key "robots", "warehouses"
 end
