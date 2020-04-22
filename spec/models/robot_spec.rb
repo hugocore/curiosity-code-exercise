@@ -17,7 +17,7 @@ RSpec.describe Robot, type: :model do
     let(:y) { rand(-10..0) }
 
     it 'errors when put outside the grid' do
-      expect { robot }.to raise_error ActiveRecord::RecordInvalid
+      expect { robot }.to raise_error ActiveRecord::RecordInvalid, /not a positive location inside/
     end
   end
 
@@ -25,7 +25,7 @@ RSpec.describe Robot, type: :model do
     let(:x) { rand(-10..0) }
 
     it 'errors when put outside the grid' do
-      expect { robot }.to raise_error ActiveRecord::RecordInvalid
+      expect { robot }.to raise_error ActiveRecord::RecordInvalid, /not a positive location inside/
     end
   end
 
@@ -33,7 +33,7 @@ RSpec.describe Robot, type: :model do
     let(:x) { rand(warehouse.width + 1..warehouse.width + 10) }
 
     it 'errors when put outside the grid' do
-      expect { robot }.to raise_error ActiveRecord::RecordInvalid
+      expect { robot }.to raise_error ActiveRecord::RecordInvalid, /not a positive location inside/
     end
   end
 
@@ -41,7 +41,7 @@ RSpec.describe Robot, type: :model do
     let(:y) { rand(warehouse.width + 1..warehouse.width + 10) }
 
     it 'errors when put outside the grid' do
-      expect { robot }.to raise_error ActiveRecord::RecordInvalid
+      expect { robot }.to raise_error ActiveRecord::RecordInvalid, /not a positive location inside/
     end
   end
 
