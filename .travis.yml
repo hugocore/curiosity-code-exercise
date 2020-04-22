@@ -5,9 +5,12 @@ services:
   - postgresql
 before_script:
   - psql -c 'create database curiosity_test;' -U postgres
-  - rails db:migrate RAILS_ENV=test
+script:
+  - bundle exec rake db:test:load
+  - bundle exec rspec
 env:
   global:
   - DB_HOST=localhost
   - DB_USER=postgres
   - DB_PASSWORD=
+  - RAILS_ENV=test
