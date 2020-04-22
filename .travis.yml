@@ -8,7 +8,6 @@ before_script:
 script:
   - bundle exec rake db:test:load
   - bundle exec rspec
-  - bundle exec coveralls push
 env:
   global:
   - DB_HOST=localhost

@@ -30,10 +30,10 @@ group :development do
 end
 
 group :test do
-  gem 'coveralls'
   gem 'factory_bot_rails'
   gem 'rspec-rails'
   gem 'rubocop-rspec', require: false
+  gem 'simplecov'
   gem 'spring-commands-rspec'
 end
 
