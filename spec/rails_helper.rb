@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
-require 'coveralls'
-Coveralls.wear!
-
 require 'simplecov'
+require 'coveralls'
+
+Coveralls.wear!('rails')
 SimpleCov.start 'rails'
 
 # This file is copied to spec/ when you run 'rails generate rspec:install'
