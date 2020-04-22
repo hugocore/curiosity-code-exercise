@@ -13,7 +13,7 @@ AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
   ExtraDetails: false
-  TargetRubyVersion: 2.7.1
+  TargetRubyVersion: 2.7.0
   NewCops: enable
   Exclude:
     # auto-generated

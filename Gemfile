@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.7.1'
+ruby '2.7.0'
 
 # Rails API mode
 gem 'rails', '~> 6.0.2', '>= 6.0.2.2'
@@ -26,14 +26,14 @@ group :development do
   gem 'overcommit'
   gem 'rails_best_practices'
   gem 'rubocop'
-  gem 'rubocop-rails'
+  gem 'rubocop-rails', require: false
 end
 
 group :test do
   gem 'coveralls'
   gem 'factory_bot_rails'
   gem 'rspec-rails'
-  gem 'rubocop-rspec'
+  gem 'rubocop-rspec', require: false
   gem 'simplecov'
   gem 'spring-commands-rspec'
 end
