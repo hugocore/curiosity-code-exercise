@@ -267,7 +267,6 @@ DEPENDENCIES
   rubocop
   rubocop-rails
   rubocop-rspec
-  simplecov
   spring
   spring-commands-rspec
   tzinfo-data
