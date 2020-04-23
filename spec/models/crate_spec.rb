@@ -70,4 +70,13 @@ RSpec.describe Crate, type: :model do
       expect { crate }.to raise_error ActiveRecord::RecordInvalid, /Location is not available/
     end
   end
+
+  describe '#location' do
+    let(:x) { rand(1..10) }
+    let(:y) { rand(1..10) }
+
+    it 'returns the current location as a Cartesian coordinate' do
+      expect(crate.location).to eq([x, y])
+    end
+  end
 end
