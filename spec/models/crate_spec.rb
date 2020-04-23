@@ -60,4 +60,14 @@ RSpec.describe Crate, type: :model do
       expect(crate.warehouse).to eq(crate.robot.warehouse)
     end
   end
+
+  context 'when another crate is already in the location' do
+    subject(:crate) { create :crate, x: x, y: y, warehouse: warehouse }
+
+    before { create(:crate, x: x, y: y, warehouse: warehouse) }
+
+    it 'errors when the location is not available' do
+      expect { crate }.to raise_error ActiveRecord::RecordInvalid, /Location is not available/
+    end
+  end
 end
