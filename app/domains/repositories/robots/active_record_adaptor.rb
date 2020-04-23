@@ -39,6 +39,10 @@ module Repositories
         robot.crate.present?
       end
 
+      def over_crate?(robot)
+        Crate.in_location(robot.x, robot.y, robot.warehouse).exists?
+      end
+
       def save(robot)
         robot.save!
       end

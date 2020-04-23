@@ -104,4 +104,22 @@ RSpec.describe Repositories::Robots::ActiveRecordAdaptor do
       end
     end
   end
+
+  describe '#over_crate?' do
+    context 'when over a crate' do
+      before { create :crate, x: x, y: y, warehouse: robot.warehouse }
+
+      it 'returns true' do
+        expect(repo).to be_over_crate(robot)
+      end
+    end
+
+    context 'when not over a crate' do
+      before { create :crate, x: warehouse.width, y: y, warehouse: robot.warehouse }
+
+      it 'returns false' do
+        expect(repo).not_to be_over_crate(robot)
+      end
+    end
+  end
 end
