@@ -4,7 +4,7 @@ module Repositories
   module Robots
     class ActiveRecordAdaptor < Repositories::Robots::Base
       def find_by(id:)
-        Robot.find(id)
+        Robot.find_by(id: id)
       end
 
       def up(robot, distance)
