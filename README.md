@@ -5,7 +5,8 @@
 
 # Curiosity - The tale of a warehouse robot
 
-Imagine that this is a project for NASA. They have high standards and strict safety requirements. This test should take between 1 to 2 hours to complete. If it takes longer, don't worry. We're only testing your skills, not your delivery speed.
+Imagine that this is a project for NASA. They have high standards and strict safety requirements. Still, using Ruby on Rails develop a RESTful API that can move a robot
+inside a warehouse. This robot can lift crates and move them from one place to another.
 
 # Usage
 

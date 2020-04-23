@@ -20,6 +20,7 @@ gem 'dry-auto_inject', '~> 0.7'
 gem 'dry-container', '~> 0.7'
 
 group :development, :test do
+  gem 'coveralls', require: false
   gem 'pry'
   gem 'pry-rails'
   gem 'spring'
