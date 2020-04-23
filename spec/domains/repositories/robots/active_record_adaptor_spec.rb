@@ -86,4 +86,22 @@ RSpec.describe Repositories::Robots::ActiveRecordAdaptor do
       expect { repo.drop_crate(robot) }.to change(crate, :robot).from(robot).to(nil)
     end
   end
+
+  describe '#holding_crate?' do
+    context 'when holding a crate' do
+      let(:robot) { create :robot, :holding_crate }
+
+      it 'returns true' do
+        expect(repo).to be_holding_crate(robot)
+      end
+    end
+
+    context 'when not holding a crate' do
+      let(:robot) { create :robot }
+
+      it 'returns false' do
+        expect(repo).not_to be_holding_crate(robot)
+      end
+    end
+  end
 end

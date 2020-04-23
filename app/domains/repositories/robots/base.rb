@@ -31,6 +31,10 @@ module Repositories
         raise 'Not implemented yet'
       end
 
+      def holding_crate?(_robot)
+        raise 'Not implemented yet'
+      end
+
       def save
         raise 'Not implemented yet'
       end

@@ -35,6 +35,8 @@ module Repositories
         robot.crate = nil
       end
 
+      def holding_crate?(robot); end
+
       def save(robot)
         robot.save!
       end
