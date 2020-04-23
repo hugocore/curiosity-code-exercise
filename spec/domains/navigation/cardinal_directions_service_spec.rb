@@ -12,26 +12,26 @@ RSpec.describe Navigation::CardinalDirectionsService do
   let(:y) { 1 }
 
   describe '#call' do
-    before { navigate.call(robot_id: robot.id, cardinal_points: cardinal_points) }
+    before { navigate.call(robot_id: robot.id, commands: commands) }
 
-    context 'when all cardinal directions are given' do
-      let(:cardinal_points) { %w[N E S W] }
+    context 'when all valid commands are given' do
+      let(:commands) { %w[N E S W] }
 
       it 'moves the robot in a circle' do
         expect(robot.reload.location).to eq([1, 1])
       end
     end
 
-    context 'when the cardinal directions zig zag' do
-      let(:cardinal_points) { %w[N E N E N E N E] }
+    context 'when the commands zig zag' do
+      let(:commands) { %w[N E N E N E N E] }
 
       it 'moves the robot to the center of the warehouse' do
         expect(robot.reload.location).to eq([5, 5])
       end
     end
 
-    context 'when a cardinal directions is invalid' do
-      let(:cardinal_points) { %w[A] }
+    context 'when a commands is invalid' do
+      let(:commands) { %w[A] }
 
       it 'keeps the robot in the same place' do
         expect(robot.reload.location).to eq([1, 1])

@@ -55,7 +55,7 @@ RSpec.describe RobotControlController, type: :controller do
       end
 
       it 'stops the sequence on the first invalid command' do
-        expect(robot.reload.location).to eq([2, 1])
+        expect(robot.reload.location).to eq([1, 2])
       end
     end
 
