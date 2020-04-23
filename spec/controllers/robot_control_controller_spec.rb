@@ -2,31 +2,31 @@
 
 require 'rails_helper'
 
-RSpec.describe RobotNavigationController, type: :controller do
+RSpec.describe RobotControlController, type: :controller do
   let(:warehouse) { create :warehouse, width: 10, length: 10 }
   let(:robot) { create :robot, x: x, y: y, warehouse: warehouse }
-  let(:directions) { 'N' }
+  let(:commands) { 'N' }
   let(:robot_id) { robot.id }
   let(:x) { 1 }
   let(:y) { 1 }
 
   before do
-    post :move, params: { id: robot_id, directions: directions }
+    post :control, params: { id: robot_id, commands: commands }
   end
 
-  describe 'POST move' do
+  describe 'POST control' do
     it 'responds with a 204' do
       expect(response).to have_http_status(:no_content)
     end
 
-    it 'makes the robot move' do
+    it 'controls the robot movement' do
       expect(robot.reload.location).to eq([1, 2])
     end
 
     context 'with an invalid move' do
-      let(:directions) { 'A' }
+      let(:commands) { 'A' }
 
-      it 'responds with a 400' do
+      it 'responds with a 204' do
         expect(response).to have_http_status(:bad_request)
       end
 
@@ -35,32 +35,44 @@ RSpec.describe RobotNavigationController, type: :controller do
       end
     end
 
-    context 'with a list of directions' do
-      let(:directions) { ' N E N E N E N E' }
+    context 'with a list of commands' do
+      let(:commands) { ' N E N E N E N E' }
 
       it 'responds with a 204' do
         expect(response).to have_http_status(:no_content)
       end
 
-      it 'makes the robot move' do
+      it 'controls the robot movement' do
         expect(robot.reload.location).to eq([5, 5])
       end
     end
 
-    context 'with a list of directions without spaces' do
-      let(:directions) { 'NENENENE ' }
+    context 'with a list containing invalid commands' do
+      let(:commands) { 'N X N' }
+
+      it 'responds with a 204' do
+        expect(response).to have_http_status(:bad_request)
+      end
+
+      it 'stops the sequence on the first invalid command' do
+        expect(robot.reload.location).to eq([2, 1])
+      end
+    end
+
+    context 'with a list of commands without spaces' do
+      let(:commands) { 'NENENENE ' }
 
       it 'responds with a 204' do
         expect(response).to have_http_status(:no_content)
       end
 
-      it 'makes the robot move' do
+      it 'controls the robot movement' do
         expect(robot.reload.location).to eq([5, 5])
       end
     end
 
-    context 'without directions' do
-      let(:directions) { nil }
+    context 'without commands' do
+      let(:commands) { nil }
 
       it 'responds with a 204' do
         expect(response).to have_http_status(:no_content)

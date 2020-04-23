@@ -123,9 +123,19 @@ There are some rules about moving crates:
 
 - Any other symbol used to describe a direction results in bad request
 
+- Commands of movement and other operations are sent together
+
+- Every command have a real-time effect, meaning that every command has an immidiate and synchronous result before the next
+
+- When a sequence of commands contain a command that doesn't obey the rules or is invalid, it stops the sequence at that place to prevent damages
 
 # Improvements
 
 - Instead of using actual instances of the repositories in specs,
 these could be stubbed so specs wouldn't interact with a database.
 Making the tests run quicker and abstract the data layer implementation.
+
+- Sequences could be dealt in a transaction to rollback in case
+some command is invalid, but with many robots running it could become
+tricky to control. An event-based architecture would be better to
+cope with changes in real-time.
