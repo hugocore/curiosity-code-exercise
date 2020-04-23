@@ -20,7 +20,7 @@ RSpec.describe RobotNavigationController, type: :controller do
     end
 
     it 'makes the robot move' do
-      expect(robot.reload.position).to eq([1, 2])
+      expect(robot.reload.location).to eq([1, 2])
     end
 
     context 'with an invalid move' do
@@ -31,7 +31,7 @@ RSpec.describe RobotNavigationController, type: :controller do
       end
 
       it 'does not move the robot' do
-        expect(robot.reload.position).to eq([1, 1])
+        expect(robot.reload.location).to eq([1, 1])
       end
     end
 
@@ -43,7 +43,7 @@ RSpec.describe RobotNavigationController, type: :controller do
       end
 
       it 'makes the robot move' do
-        expect(robot.reload.position).to eq([5, 5])
+        expect(robot.reload.location).to eq([5, 5])
       end
     end
 
@@ -55,7 +55,7 @@ RSpec.describe RobotNavigationController, type: :controller do
       end
 
       it 'makes the robot move' do
-        expect(robot.reload.position).to eq([5, 5])
+        expect(robot.reload.location).to eq([5, 5])
       end
     end
 
@@ -67,7 +67,7 @@ RSpec.describe RobotNavigationController, type: :controller do
       end
 
       it 'does not move the robot' do
-        expect(robot.reload.position).to eq([1, 1])
+        expect(robot.reload.location).to eq([1, 1])
       end
     end
 

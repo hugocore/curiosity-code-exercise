@@ -48,11 +48,11 @@ RSpec.describe Crate, type: :model do
   context 'when grabbed by robot' do
     subject(:crate) { create :crate, :grabbed, x: x, y: y, warehouse: warehouse }
 
-    it 'checks that the crate and robot x position match' do
+    it 'checks that the crate and robot x location match' do
       expect(crate.x).to eq(crate.robot.x)
     end
 
-    it 'checks that the crate and robot y position match' do
+    it 'checks that the crate and robot y location match' do
       expect(crate.y).to eq(crate.robot.y)
     end
 

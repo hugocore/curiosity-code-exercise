@@ -24,7 +24,7 @@ class Robot < ApplicationRecord
     errors[:base] << error_location if Robot.others_than(self).in_location(x, y, warehouse).exists?
   end
 
-  def position
+  def location
     [x, y]
   end
 end

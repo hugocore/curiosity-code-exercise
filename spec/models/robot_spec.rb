@@ -48,11 +48,11 @@ RSpec.describe Robot, type: :model do
   context 'when grabbing a crate' do
     subject(:robot) { create :robot, :holding_crate, x: x, y: y, warehouse: warehouse }
 
-    it 'checks that the crate and robot x position match' do
+    it 'checks that the crate and robot x location match' do
       expect(robot.x).to eq(robot.crate.x)
     end
 
-    it 'checks that the crate and robot y position match' do
+    it 'checks that the crate and robot y location match' do
       expect(robot.y).to eq(robot.crate.y)
     end
 
@@ -71,12 +71,12 @@ RSpec.describe Robot, type: :model do
     end
   end
 
-  describe '#position' do
+  describe '#location' do
     let(:x) { rand(1..10) }
     let(:y) { rand(1..10) }
 
-    it 'returns the current position as a Cartesian coordinate' do
-      expect(robot.position).to eq([x, y])
+    it 'returns the current location as a Cartesian coordinate' do
+      expect(robot.location).to eq([x, y])
     end
   end
 end

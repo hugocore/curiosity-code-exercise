@@ -18,7 +18,7 @@ RSpec.describe Navigation::CardinalDirectionsService do
       let(:cardinal_points) { %w[N E S W] }
 
       it 'moves the robot in a circle' do
-        expect(robot.reload.position).to eq([1, 1])
+        expect(robot.reload.location).to eq([1, 1])
       end
     end
 
@@ -26,7 +26,7 @@ RSpec.describe Navigation::CardinalDirectionsService do
       let(:cardinal_points) { %w[N E N E N E N E] }
 
       it 'moves the robot to the center of the warehouse' do
-        expect(robot.reload.position).to eq([5, 5])
+        expect(robot.reload.location).to eq([5, 5])
       end
     end
 
@@ -34,7 +34,7 @@ RSpec.describe Navigation::CardinalDirectionsService do
       let(:cardinal_points) { %w[A] }
 
       it 'keeps the robot in the same place' do
-        expect(robot.reload.position).to eq([1, 1])
+        expect(robot.reload.location).to eq([1, 1])
       end
     end
   end

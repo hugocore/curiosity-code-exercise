@@ -94,7 +94,7 @@ If the robot starts in the south-west corner of the warehouse then the following
 
 * (Req 1.) Create a way to send a series of commands to the robot
 * (Req 2.) Make sure that the robot doesn't try to move outside the warehouse
-* (Req 3.) Ensure that the robot's position is persisted (in the database)
+* (Req 3.) Ensure that the robot's location is persisted (in the database)
 
 ## Part two
 
