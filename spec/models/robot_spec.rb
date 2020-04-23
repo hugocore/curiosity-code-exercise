@@ -61,6 +61,16 @@ RSpec.describe Robot, type: :model do
     end
   end
 
+  context 'when another robot is already in the location' do
+    subject(:robot) { create :robot, x: x, y: y, warehouse: warehouse }
+
+    before { create(:robot, x: x, y: y, warehouse: warehouse) }
+
+    it 'errors when the location is not available' do
+      expect { robot }.to raise_error ActiveRecord::RecordInvalid, /Location is not available/
+    end
+  end
+
   describe '#position' do
     let(:x) { rand(1..10) }
     let(:y) { rand(1..10) }
