@@ -116,3 +116,16 @@ There are some rules about moving crates:
 # Assumptions
 
 - If given an invalid cardinal direction, the robot stays in the same place
+
+- When trying to move a robot that doesn't exist, a 404 is returned
+
+- Cardinal directions can be seperated by spaces or not
+
+- Any other symbol used to describe a direction results in bad request
+
+
+# Improvements
+
+- Instead of using actual instances of the repositories in specs,
+these could be stubbed so specs wouldn't interact with a database.
+Making the tests run quicker and abstract the data layer implementation.
