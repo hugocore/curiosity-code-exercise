@@ -16,7 +16,7 @@ RSpec.describe Repositories::Robots::ActiveRecordAdaptor do
 
     context 'with an invalid ID' do
       it 'finds the robot by ID' do
-        expect { repo.find_by(id: 0) }.to raise_error ActiveRecord::RecordNotFound
+        expect(repo.find_by(id: 0)).to eq(nil)
       end
     end
   end
