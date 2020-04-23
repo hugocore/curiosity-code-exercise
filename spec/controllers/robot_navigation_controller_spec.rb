@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe NavigationController, type: :controller do
+RSpec.describe RobotNavigationController, type: :controller do
   let(:warehouse) { create :warehouse, width: 10, length: 10 }
   let(:robot) { create :robot, x: x, y: y, warehouse: warehouse }
   let(:directions) { 'N' }
@@ -15,8 +15,8 @@ RSpec.describe NavigationController, type: :controller do
   end
 
   describe 'POST move' do
-    it 'responds with a 200' do
-      expect(response.status).to be 200
+    it 'responds with a 204' do
+      expect(response).to have_http_status(:no_content)
     end
 
     it 'makes the robot move' do
@@ -26,8 +26,8 @@ RSpec.describe NavigationController, type: :controller do
     context 'with an invalid move' do
       let(:directions) { 'A' }
 
-      it 'responds with a 200' do
-        expect(response.status).to be 200
+      it 'responds with a 400' do
+        expect(response).to have_http_status(:bad_request)
       end
 
       it 'does not move the robot' do
@@ -36,10 +36,22 @@ RSpec.describe NavigationController, type: :controller do
     end
 
     context 'with a list of directions' do
-      let(:directions) { 'N E N E N E N E' }
+      let(:directions) { ' N E N E N E N E' }
 
-      it 'responds with a 200' do
-        expect(response.status).to be 200
+      it 'responds with a 204' do
+        expect(response).to have_http_status(:no_content)
+      end
+
+      it 'makes the robot move' do
+        expect(robot.reload.position).to eq([5, 5])
+      end
+    end
+
+    context 'with a list of directions without spaces' do
+      let(:directions) { 'NENENENE ' }
+
+      it 'responds with a 204' do
+        expect(response).to have_http_status(:no_content)
       end
 
       it 'makes the robot move' do
@@ -50,8 +62,8 @@ RSpec.describe NavigationController, type: :controller do
     context 'without directions' do
       let(:directions) { nil }
 
-      it 'responds with a 200' do
-        expect(response.status).to be 200
+      it 'responds with a 204' do
+        expect(response).to have_http_status(:no_content)
       end
 
       it 'does not move the robot' do
@@ -62,8 +74,8 @@ RSpec.describe NavigationController, type: :controller do
     context 'with an invalid robot' do
       let(:robot_id) { 0 }
 
-      it 'responds with a 400' do
-        expect(response.status).to be 400
+      it 'responds with a 404' do
+        expect(response).to have_http_status(:not_found)
       end
     end
   end
