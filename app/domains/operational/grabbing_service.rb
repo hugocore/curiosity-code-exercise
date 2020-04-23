@@ -9,6 +9,8 @@ module Operational
 
       return if robots_repo.holding_crate?(robot)
 
+      return unless robots_repo.over_crate?(robot)
+
       robots_repo.grab_crate(robot)
     end
   end
