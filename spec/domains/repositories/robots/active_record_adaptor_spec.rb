@@ -66,7 +66,7 @@ RSpec.describe Repositories::Robots::ActiveRecordAdaptor do
     let(:crate) { create :crate, x: robot.x, y: robot.y, warehouse: warehouse }
 
     it 'assigns a crate to the robot' do
-      expect { repo.grab_crate(robot, crate) }.to change(robot, :crate).from(nil).to(crate)
+      expect { repo.grab_crate(robot) }.to change(robot, :crate).from(nil).to(crate)
     end
   end
 

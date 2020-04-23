@@ -23,7 +23,9 @@ module Repositories
         robot.x -= distance
       end
 
-      def grab_crate(robot, crate)
+      def grab_crate(robot)
+        crate = Crate.in_location(robot.x, robot.y, robot.warehouse).first
+
         robot.crate = crate
       end
 

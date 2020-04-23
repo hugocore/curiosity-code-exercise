@@ -23,7 +23,7 @@ module Repositories
         raise 'Not implemented yet'
       end
 
-      def grab_crate(_robot, _crate)
+      def grab_crate(_robot)
         raise 'Not implemented yet'
       end
 
