@@ -1,6 +1,7 @@
 [![Build Status](https://travis-ci.org/hugocore/curiosity-code-exercise.svg?branch=master)](https://travis-ci.org/hugocore/curiosity-code-exercise)
 [![Maintainability](https://api.codeclimate.com/v1/badges/57d6a14eb1a0c0ee7248/maintainability)](https://codeclimate.com/github/hugocore/curiosity-code-exercise/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/57d6a14eb1a0c0ee7248/test_coverage)](https://codeclimate.com/github/hugocore/curiosity-code-exercise/test_coverage)
+[![Coverage Status](https://coveralls.io/repos/github/hugocore/curiosity-code-exercise/badge.svg?branch=master)](https://coveralls.io/github/hugocore/curiosity-code-exercise?branch=master)
 
 # Curiosity - The tale of a warehouse robot
 
