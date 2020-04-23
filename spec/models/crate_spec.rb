@@ -48,16 +48,35 @@ RSpec.describe Crate, type: :model do
   context 'when grabbed by robot' do
     subject(:crate) { create :crate, :grabbed, x: x, y: y, warehouse: warehouse }
 
-    it 'checks that the crate and robot x position match' do
+    it 'checks that the crate and robot x location match' do
       expect(crate.x).to eq(crate.robot.x)
     end
 
-    it 'checks that the crate and robot y position match' do
+    it 'checks that the crate and robot y location match' do
       expect(crate.y).to eq(crate.robot.y)
     end
 
     it 'checks that the crate and the robot are in the same warehouse' do
       expect(crate.warehouse).to eq(crate.robot.warehouse)
+    end
+  end
+
+  context 'when another crate is already in the location' do
+    subject(:crate) { create :crate, x: x, y: y, warehouse: warehouse }
+
+    before { create(:crate, x: x, y: y, warehouse: warehouse) }
+
+    it 'errors when the location is not available' do
+      expect { crate }.to raise_error ActiveRecord::RecordInvalid, /Location is not available/
+    end
+  end
+
+  describe '#location' do
+    let(:x) { rand(1..10) }
+    let(:y) { rand(1..10) }
+
+    it 'returns the current location as a Cartesian coordinate' do
+      expect(crate.location).to eq([x, y])
     end
   end
 end

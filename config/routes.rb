@@ -3,7 +3,7 @@
 Rails.application.routes.draw do
   resources :robots, only: [] do
     member do
-      post :move, to: 'robot_navigation#move'
+      post :control, to: 'robot_control#control'
     end
   end
 end

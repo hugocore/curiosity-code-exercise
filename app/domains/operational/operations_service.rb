@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
-module Navigation
-  class CardinalDirectionsService
+module Operational
+  class OperationsService
     include AutoInject['robots_repo']
+    include AutoInject['grabbing_service']
+    include AutoInject['dropping_service']
 
     def call(robot_id:, commands:)
       @robot = robots_repo.find_by(id: robot_id)
@@ -10,7 +12,7 @@ module Navigation
       raise Errors::RobotNotFound unless robot
 
       commands.each do |command|
-        move_robot(command)
+        operate_robot(command)
       end
 
       robots_repo.save(robot)
@@ -20,16 +22,12 @@ module Navigation
 
     attr_reader :robot
 
-    def move_robot(command)
+    def operate_robot(command)
       case command
-      when Commands::NORTH
-        robots_repo.up(robot, 1)
-      when Commands::SOUTH
-        robots_repo.down(robot, 1)
-      when Commands::EAST
-        robots_repo.right(robot, 1)
-      when Commands::WEST
-        robots_repo.left(robot, 1)
+      when Commands::GRAB
+        grabbing_service.call(robot: robot)
+      when Commands::DROP
+        dropping_service.call(robot: robot)
       end
     end
   end

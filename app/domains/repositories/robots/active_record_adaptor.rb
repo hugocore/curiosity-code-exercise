@@ -2,7 +2,7 @@
 
 module Repositories
   module Robots
-    class ActiveRecordAdaptor < Repositories::Robots::Base
+    class ActiveRecordAdaptor < Base
       def find_by(id:)
         Robot.find_by(id: id)
       end
@@ -21,6 +21,18 @@ module Repositories
 
       def left(robot, distance)
         robot.x -= distance
+      end
+
+      def grab_crate(robot)
+        crate = Crate.in_location(robot.x, robot.y, robot.warehouse).first
+
+        robot.crate = crate
+      end
+
+      def drop_crate(robot)
+        robot.crate.x = robot.x
+        robot.crate.y = robot.y
+        robot.crate = nil
       end
 
       def save(robot)

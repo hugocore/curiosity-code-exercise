@@ -5,7 +5,8 @@ require 'rails_helper'
 RSpec.describe Repositories::Robots::ActiveRecordAdaptor do
   subject(:repo) { described_class.new }
 
-  let(:robot) { create :robot, x: x, y: y }
+  let(:warehouse) { create :warehouse }
+  let(:robot) { create :robot, x: x, y: y, warehouse: warehouse }
   let(:x) { 1 }
   let(:y) { 1 }
 
@@ -16,7 +17,7 @@ RSpec.describe Repositories::Robots::ActiveRecordAdaptor do
 
     context 'with an invalid ID' do
       it 'finds the robot by ID' do
-        expect(repo.find_by(id: 0)).to eq(nil)
+        expect(repo.find_by(id: 0)).to be_nil
       end
     end
   end
@@ -58,6 +59,31 @@ RSpec.describe Repositories::Robots::ActiveRecordAdaptor do
   describe '#save' do
     it 'persists the robot in the database' do
       expect { repo.save(robot) }.not_to raise_error
+    end
+  end
+
+  describe '#grab_crate' do
+    let(:crate) { create :crate, x: robot.x, y: robot.y, warehouse: warehouse }
+
+    it 'assigns a crate to the robot' do
+      expect { repo.grab_crate(robot) }.to change(robot, :crate).from(nil).to(crate)
+    end
+  end
+
+  describe '#drop_crate' do
+    let(:crate) { create :crate, x: warehouse.width, y: warehouse.length, warehouse: warehouse }
+    let(:robot) { create :robot, x: x, y: y, crate: crate, warehouse: warehouse }
+
+    it "moves the crate in the robot's location" do
+      expect { repo.drop_crate(robot) }.to change(crate, :location).to(robot.location)
+    end
+
+    it 'drops the crate' do
+      expect { repo.drop_crate(robot) }.to change(robot, :crate).from(crate).to(nil)
+    end
+
+    it 'deattaches from the robot' do
+      expect { repo.drop_crate(robot) }.to change(crate, :robot).from(robot).to(nil)
     end
   end
 end
