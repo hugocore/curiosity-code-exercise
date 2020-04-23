@@ -3,7 +3,7 @@
 class Container
   extend Dry::Container::Mixin
 
-  register(:navigation_domain) { Navigation::CardinalDirections.new }
+  register(:cardinal_directions_service) { Navigation::CardinalDirectionsService.new }
 
   register(:robots_repo) { Repositories::Robots::ActiveRecordAdaptor.new }
 end

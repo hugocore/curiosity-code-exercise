@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Navigation
-  class CardinalDirections
+  class CardinalDirectionsService
     include AutoInject['robots_repo']
 
     CARDINAL_POINT_NORTH = 'N'
@@ -11,6 +11,8 @@ module Navigation
 
     def call(robot_id:, cardinal_points:)
       @robot = robots_repo.find_by(id: robot_id)
+
+      raise Navigation::RobotNotFound unless robot
 
       cardinal_points.each do |cardinal_point|
         move_robot(cardinal_point)
