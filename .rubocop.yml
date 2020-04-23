@@ -19,6 +19,7 @@ AllCops:
     # auto-generated
     - 'bin/*'
     - 'db/schema.rb'
+    - 'coverage/**/*'
     # temp files
     - 'tmp/**/*'
     # node_modules could contain Ruby code
