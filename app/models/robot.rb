@@ -13,4 +13,8 @@ class Robot < ApplicationRecord
     errors.add(:x, error_location_outside) unless x.between?(1, warehouse.width)
     errors.add(:y, error_location_outside) unless y.between?(1, warehouse.length)
   end
+
+  def position
+    [x, y]
+  end
 end

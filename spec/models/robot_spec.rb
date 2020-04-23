@@ -60,4 +60,13 @@ RSpec.describe Robot, type: :model do
       expect(robot.warehouse).to eq(robot.crate.warehouse)
     end
   end
+
+  describe '#position' do
+    let(:x) { rand(1..10) }
+    let(:y) { rand(1..10) }
+
+    it 'returns the current position as a Cartesian coordinate' do
+      expect(robot.position).to eq([x, y])
+    end
+  end
 end
