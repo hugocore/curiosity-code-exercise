@@ -36,7 +36,7 @@ RSpec.describe RobotControlController, type: :controller do
     end
 
     context 'with a list of commands' do
-      let(:commands) { ' N E N E N E N E' }
+      let(:commands) { ' N E N E N E N E G D' }
 
       it 'responds with a 204' do
         expect(response).to have_http_status(:no_content)

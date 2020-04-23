@@ -18,14 +18,14 @@ RSpec.describe Operational::GrabbingService do
   describe '#call' do
     before { drop_service.call(robot: robot) }
 
-    it 'calls the robots repository' do
+    it 'tells the robot to grab a crate' do
       expect(repo).to have_received(:grab_crate).with(robot)
     end
 
     context 'without a robot' do
       let(:robot) { nil }
 
-      it 'does not grab a crate' do
+      it 'does not tell the robot to grab a crate' do
         expect(repo).not_to have_received(:grab_crate).with(robot)
       end
     end
@@ -33,7 +33,7 @@ RSpec.describe Operational::GrabbingService do
     context 'with a robot already holding a crate' do
       let(:holding_crate?) { true }
 
-      it 'does not grab a crate' do
+      it 'does not tell the robot to grab a crate' do
         expect(repo).not_to have_received(:grab_crate).with(robot)
       end
     end
@@ -41,7 +41,7 @@ RSpec.describe Operational::GrabbingService do
     context 'when the robot is not over a crate' do
       let(:over_crate?) { false }
 
-      it 'does not grab a crate' do
+      it 'does not tell the robot to grab a crate' do
         expect(repo).not_to have_received(:grab_crate).with(robot)
       end
     end
