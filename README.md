@@ -89,7 +89,7 @@ If the robot starts in the south-west corner of the warehouse then the following
 
 "N E N E N E N E"
 
-### Requirements
+# Requirements
 
 * (Req 1.) Create a way to send a series of commands to the robot
 * (Req 2.) Make sure that the robot doesn't try to move outside the warehouse
@@ -111,3 +111,7 @@ There are some rules about moving crates:
 * (Req 6.) The robot should not try and lift a crate if it already lifting one
 * (Req 7.) The robot should not lift a crate if there is not one present
 * (Req 8.) The robot should not drop a crate on another crate!
+
+# Assumptions
+
+- If given an invalid cardinal direction, the robot stays in the same place
