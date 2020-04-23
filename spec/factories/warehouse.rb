@@ -2,8 +2,8 @@
 
 FactoryBot.define do
   factory :warehouse do
-    width { rand(1..10) }
-    length { rand(1..10) }
+    width { 10 }
+    length { 10 }
 
     trait :with_robots do
       after(:create) do |warehouse|

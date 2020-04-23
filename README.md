@@ -1,5 +1,6 @@
 [![Build Status](https://travis-ci.org/hugocore/curiosity-code-exercise.svg?branch=master)](https://travis-ci.org/hugocore/curiosity-code-exercise)
-[![Coverage Status](https://coveralls.io/repos/github/hugocore/curiosity-code-exercise/badge.svg?branch=master)](https://coveralls.io/github/hugocore/curiosity-code-exercise?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/57d6a14eb1a0c0ee7248/maintainability)](https://codeclimate.com/github/hugocore/curiosity-code-exercise/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/57d6a14eb1a0c0ee7248/test_coverage)](https://codeclimate.com/github/hugocore/curiosity-code-exercise/test_coverage)
 
 # Curiosity - The tale of a warehouse robot
 
@@ -89,7 +90,7 @@ If the robot starts in the south-west corner of the warehouse then the following
 
 "N E N E N E N E"
 
-### Requirements
+# Requirements
 
 * (Req 1.) Create a way to send a series of commands to the robot
 * (Req 2.) Make sure that the robot doesn't try to move outside the warehouse
@@ -111,3 +112,20 @@ There are some rules about moving crates:
 * (Req 6.) The robot should not try and lift a crate if it already lifting one
 * (Req 7.) The robot should not lift a crate if there is not one present
 * (Req 8.) The robot should not drop a crate on another crate!
+
+# Assumptions
+
+- If given an invalid cardinal direction, the robot stays in the same place
+
+- When trying to move a robot that doesn't exist, a 404 is returned
+
+- Cardinal directions can be seperated by spaces or not
+
+- Any other symbol used to describe a direction results in bad request
+
+
+# Improvements
+
+- Instead of using actual instances of the repositories in specs,
+these could be stubbed so specs wouldn't interact with a database.
+Making the tests run quicker and abstract the data layer implementation.
