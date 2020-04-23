@@ -7,6 +7,8 @@ module Operational
     def call(robot:)
       return unless robot
 
+      return if robots_repo.holding_crate?(robot)
+
       robots_repo.grab_crate(robot)
     end
   end
