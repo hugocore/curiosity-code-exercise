@@ -2,7 +2,7 @@
 
 module Navigation
   class CardinalDirections
-    include Registry::Inject['robots_repo']
+    include AutoInject['robots_repo']
 
     CARDINAL_POINT_NORTH = 'N'
     CARDINAL_POINT_SOUTH = 'S'
