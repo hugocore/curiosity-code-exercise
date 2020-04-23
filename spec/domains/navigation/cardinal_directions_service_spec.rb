@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Navigation::CardinalDirections do
+RSpec.describe Navigation::CardinalDirectionsService do
   subject(:navigate) { described_class.new(robots_repo: repo) }
 
   let(:repo) { Repositories::Robots::ActiveRecordAdaptor.new }
