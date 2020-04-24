@@ -5,12 +5,13 @@
 
 # Curiosity - The tale of a warehouse robot
 
-Imagine that this is a project for NASA. They have high standards and strict safety requirements. Still, using Ruby on Rails develop a RESTful API that can move a robot
-inside a warehouse. This robot can lift crates and move them from one place to another.
+In this code exercise, I will work for NASA. They have high standards and strict safety requirements, so I won't be easey. Still, using Ruby on Rails they asked me to develop
+a RESTful API that can move a robot inside a warehouse. This robot can lift
+crates and move them from one place to another.
 
 # Usage
 
-Run the project with Docker:
+Run this project with Docker:
 
 ```
 docker-compose build
@@ -67,13 +68,15 @@ https://coveralls.io/github/hugocore/curiosity-code-exercise
 
 https://codeclimate.com/github/hugocore/curiosity-code-exercise
 
-# Background
+# The problem
 
-We have installed a robot in our Mars warehouse and now we need to be able to send it commands to control it. We need you to implement the control mechanism and expose it via an RESTful API.
+NASA says:
 
-For convenience the robot moves along a grid in the roof of the warehouse and we have made sure that all of our warehouses are built so that the dimensions of the grid are 10 by 10. We've also made sure that all our warehouses are aligned along north-south and east-west axes.
+> We have installed a robot in our Mars warehouse and now we need to be able to send it commands to control it. We need you to implement the control mechanism and expose it via an RESTful API.
 
-All of the commands to the robot consist of a single capital letter and different commands are dilineated by whitespace.
+> For convenience the robot moves along a grid in the roof of the warehouse and we have made sure that all of our warehouses are built so that the dimensions of the grid are 10 by 10. We've also made sure that all our warehouses are aligned along north-south and east-west axes.
+
+> All of the commands to the robot consist of a single capital letter and different commands are dilineated by whitespace.
 
 ## Part One
 
@@ -92,7 +95,7 @@ If the robot starts in the south-west corner of the warehouse then the following
 
 "N E N E N E N E"
 
-# Requirements
+### Requirements
 
 * (Req 1.) Create a way to send a series of commands to the robot
 * (Req 2.) Make sure that the robot doesn't try to move outside the warehouse
@@ -103,6 +106,8 @@ If the robot starts in the south-west corner of the warehouse then the following
 The robot is equipped with a lifting claw which can be used to move crates around the warehouse. We track the locations of all the crates in the warehouse.
 
 Model the presence of crates in the warehouse. Initially one is in the centre and one in the north-east corner.
+
+### Requirements
 
 Extend the robot's commands to include the following:
 
@@ -115,7 +120,7 @@ There are some rules about moving crates:
 * (Req 7.) The robot should not lift a crate if there is not one present
 * (Req 8.) The robot should not drop a crate on another crate!
 
-# Assumptions
+## Assumptions
 
 - If given an invalid cardinal direction, the robot stays in the same place
 
@@ -131,6 +136,130 @@ There are some rules about moving crates:
 
 - When a sequence of commands contain a command that doesn't obey the rules or is invalid, it stops the sequence at that place to prevent damages
 
+# Solution
+
+Following the ![c4model](https://c4model.com/) I will describe my solution from a
+top-down approach, i.e. from Context, Containers, Components to Code.
+
+## Context
+
+This API is going to be used by external clients that communicate
+through REST to send commands of string, e.g. "N E S W".
+
+## Containers
+
+To run the API a web server and an application server was required.
+In this case, I decided to use *Ruby on Rails API* as my web framework for
+simplicity and to get a web and application server up and running quickly.
+The application server ('Ruby on Rails') persists data into a database running
+PostgreSQL.
+
+### Components
+
+![Domain-driven design](assets/ddd_arch.png)
+
+I wanted to achieve an architecture that would:
+- allow the code to be easily maintained and continuously evolved
+- loosely designed without dependencies between layers to facilitate future changes
+- aligned with business rules that were incrementally added
+- highly isolated to help keep high levels of testing coverage (picky NASA)
+- easy to read and get to known, by just looking at the layers
+- adhere to the SOLID principles and object composition
+
+With these reasons in mind, I've decided to follow a *Domain-Driven Design*,
+where the following layers are stacked together:
+
+* API - Receives HTTP requests and passes down Command objects, that tell what
+commands the robot must execute, to the domain layer.
+
+* Domain layer - This layer keeps the logic that applies to the underlying
+models, bounded in contexts about the many operations the system can do. Every
+domain is composed of services, repositories and other classes that make sense
+to be together and where a clear boundary of responsibility is defined. These are
+the existing domains:
+
+ * Control - "the brain" of the API, is able to parse and decide which actions
+ to take based on incoming commands.
+
+ * Navigation - movement control, defined in different systems, e.g. through
+ cardinal directions. In the future is easy to plug another system and keep
+ the same movement. A new controller service class would be required to depict
+ to which navigation system a command applies to.
+
+ * Operational - actions that the robot can perform. A controller service class
+ is in place and delegate operational commands (grab and drop) to smaller services.
+ Hence, separating concerns and keeping rules and logic split by action.
+
+ * Repositories - mediators between the domain and data mapping layers, are crucial
+ to support different data stores and abstract the domain from the data models.
+ E.g. swapping ActiveRecord and PostgreSQL by another database like Redis to
+ run the system in-memory would require just a new adaptor that respects the same
+ interface.
+
+* Data layer - Controls the data storage and data logic that depends on the
+data management implementation chosen. To keep things simple in this project,
+I've used ActiveRecord to manage the system's entities a.k.a data models.
+
+* Database - Keeps the data stored. For simplicity, I've chosen PostgreSQL
+due to its acceptable speed and easy to use. Another database, like Redis,
+could have been used to optimize the system's speed.
+
+
+More info at:
+
+- https://medium.com/@slavakorolev/domain-driven-design-for-ruby-on-rails-d3dd4a606677
+- https://github.com/paulrayner/ddd_sample_app_ruby
+- https://github.com/Creditas/ddd-rails-sample
+
+### Code
+
+#### CommandsService
+
+This service is the "brain" of the API. Without knowing exactly what each command
+does, it's able to delegate commands to other domains that know what to do with them:
+
+```ruby
+    def parse_command(command)
+      if Navigation::Commands::ALL.include? command
+        :navigation_service
+      elsif Operational::Commands::ALL.include? command
+        :operational_service
+      end
+    end
+```
+
+It loops through the incoming commands and validates and delegates to services
+that take them. In case an invalid command is passed, the execution stops
+(like it was described in one of the assumptions). When that happens, based
+on a feature flag, it either raises an error or logs the problem.
+
+```ruby
+commands.each do |command|
+  break invalid_command_error(command, raise_errors) unless valid_command?(command)
+
+  service = parse_command(command)
+
+  public_send(service).call(robot_id: robot_id, commands: [command])
+end
+```
+
+#### Registry
+
+Perhaps one of the most pieces of code is the `Container` that keeps a registry
+of all the repositories and services, allowing these to be auto-injected into
+one another's. For instance:
+
+```ruby
+register(:robots_repo) { Repositories::Robots::ActiveRecordAdaptor.new }
+```
+
+Could easily swap the current robots repository from one adaptation
+(here ActiveRecord) to another one, through logic or environmental variables.
+
+Thus, we can compose objects together and decouple them from actual implementations.
+It's also particularly useful when testing because it allows dependencies to be
+stubbed in specs, preventing things like hitting databases or raising errors.
+
 # Improvements
 
 - Instead of using actual instances of the repositories in specs,
@@ -141,3 +270,9 @@ Making the tests run quicker and abstract the data layer implementation.
 some command is invalid, but with many robots running it could become
 tricky to control. An event-based architecture would be better to
 cope with changes in real-time.
+
+- Pass down Command objects from the API layer to the domain layer. This would
+allow for parameters to be validated or computed.
+
+- The `CardinalDirectionsService` could have been split in smaller
+services that other navigation systems could re-use.
