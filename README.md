@@ -5,7 +5,7 @@
 
 # Curiosity - The tale of a warehouse robot
 
-In this code exercise, I will work for NASA. They have high standards and strict safety requirements, so I won't be easey. Still, using Ruby on Rails they asked me to develop
+In this code exercise, I will work for NASA. They have high standards and strict safety requirements, so I won't be easy. Still, using Ruby on Rails they asked me to develop
 a RESTful API that can move a robot inside a warehouse. This robot can lift
 crates and move them from one place to another.
 
