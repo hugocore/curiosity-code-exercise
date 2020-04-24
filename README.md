@@ -245,7 +245,7 @@ end
 
 #### Registry
 
-Perhaps one of the most pieces of code is the `Container` that keeps a registry
+Perhaps one of the most important pieces of code is the `Container`. It keeps a registry
 of all the repositories and services, allowing these to be auto-injected into
 one another's. For instance:
 
