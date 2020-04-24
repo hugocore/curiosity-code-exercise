@@ -138,7 +138,7 @@ There are some rules about moving crates:
 
 # Solution
 
-Following the ![c4model](https://c4model.com/) I will describe my solution from a
+Following the [c4model](https://c4model.com/) I will describe my solution from a
 top-down approach, i.e. from Context, Containers, Components to Code.
 
 ## Context
@@ -276,3 +276,10 @@ allow for parameters to be validated or computed.
 
 - The `CardinalDirectionsService` could have been split in smaller
 services that other navigation systems could re-use.
+
+# Review
+
+Take a look these pages to review this work:
+
+- https://github.com/hugocore/curiosity-code-exercise/projects/1
+- https://github.com/hugocore/curiosity-code-exercise/pulls?q=is%3Apr+is%3Aclosed
